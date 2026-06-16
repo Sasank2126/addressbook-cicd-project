@@ -7,22 +7,17 @@ pipeline {
     }
 
     stages {
-        stage("clone from github") {
+
+        stage("Clone") {
             steps {
                 git 'https://github.com/VengalaRao-118/addressbook-cicd-project/'
                 echo 'clone done'
             }
         }
 
-        stage("compile the project") {
+        stage("Build") {
             steps {
-                sh 'mvn compile'
-            }
-        }
-
-        stage("run the test cases") {
-            steps {
-                sh 'mvn package'
+                sh 'mvn clean package'
             }
         }
 
@@ -34,7 +29,7 @@ pipeline {
 
         stage("Deploy to Tomcat") {
             steps {
-                sh "sudo cp /var/lib/jenkins/workspace/test/target/addressbook.war /home/devops/cicdakshat/apache-tomcat-9.0.118/webapps"
+                sh 'cp target/addressbook.war /home/devops/cicdakshat/apache-tomcat-9.0.118/webapps/'
             }
         }
     }
@@ -45,4 +40,3 @@ pipeline {
         }
     }
 }
-
